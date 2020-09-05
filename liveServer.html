@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>jQuery</title>
+    <title>LiveServer</title>
 
     <script type="text/javascript" src="jquery.min.js"></script>
 
@@ -66,10 +66,15 @@
       .panel {
         float: left;
         width: 50%;
+        border-left: none;
       }
 
       iframe {
         border: none;
+      }
+
+      .hidden {
+        display: none;
       }
     </style>
   </head>
@@ -89,6 +94,10 @@
 
     <div id="bodyContainer">
       <textarea id="htmlPanel" class="panel">Hello World!</textarea>
+      <textarea id="cssPanel" class="panel hidden">p {color: green; }</textarea>
+      <textarea id="javascriptPanel" class="panel hidden">
+alert("Hi There!");</textarea
+      >
       <iframe id="outputPanel" class="panel"></iframe>
     </div>
 
@@ -105,6 +114,10 @@
       $(".toggleButton").click(function () {
         $(this).toggleClass("active");
         $(this).removeClass("highlightedButton");
+        var panelId = $(this).attr("id") + "Panel";
+        $("#" + panelId).toggleClass("hidden");
+        var numberOfActivePannels = 4 - $(".hidden").length;
+        $(".panel").width($(window).width() / numberOfActivePannels - 10);
       });
 
       $(".panel").height($(window).height() - $("#header").height() - 15); //make the iframe height equal to page length
